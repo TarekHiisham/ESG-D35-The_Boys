@@ -2,9 +2,11 @@ COMPILER := gcc
 
 #Add your File.c
 C_FILES := ../project/Test.c
+C_FILES += ../project/ADD_FA.c
 
 #Add your File.o
 O_FILES := Test.o 
+O_FILES += ADD_FA.o
 
 EXE_FILES := Linked_list.exe
 
