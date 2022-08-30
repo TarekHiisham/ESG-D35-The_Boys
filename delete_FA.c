@@ -1,11 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "type_def.h"
+#include "../typedefs/type_def.h"
 
-extern node_t *head_ptr ;
-
-void del_any_node(node_t *head_ptr , u32_t nth);
-void del_any_node(node_t *head_ptr , u32_t nth)
+void Delete_FA(u8_t location);
+void Delete_FA(u8_t location)
 {
     node_t* temp = head_ptr;
     node_t* previous = (node_t*) malloc(sizeof(node_t));
@@ -24,10 +22,10 @@ void del_any_node(node_t *head_ptr , u32_t nth)
     
     else
     {
-        nth--;
-        while (temp -> next_node != NULL && nth != 0)
+        location--;
+        while (temp -> next_node != NULL && location != 0)
         {
-            nth--;
+            location--;
             previous = temp;
             temp = temp -> next_node;
         }
