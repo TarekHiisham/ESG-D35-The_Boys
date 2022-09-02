@@ -5,6 +5,7 @@ C_FILES := ../project/Test.c
 C_FILES += ../project/ADD_FA.c
 C_FILES += ../project/ADD_FL.c
 C_FILES += ../project/PRINT.c
+C_FILES += ../project/Delete_FL.c
 
 
 #Add your File.o
@@ -12,6 +13,7 @@ O_FILES := Test.o
 O_FILES += ADD_FA.o
 O_FILES += ADD_FL.o
 O_FILES += PRINT.o
+O_FILES += Delete_FL.o
 
 
 EXE_FILES := Linked_list.exe
