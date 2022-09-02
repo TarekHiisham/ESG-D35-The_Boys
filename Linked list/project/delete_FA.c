@@ -2,39 +2,32 @@
 #include <stdlib.h>
 #include "../typedefs/type_def.h"
 
-void Delete_FA(node_t** head, u8_t location);
-void Delete_FA(node_t** head, u8_t location)
+void Delete_FA(u8_t location);
+
+void Delete_FA(u8_t location)
 {
-    node_t* temp = *head;
-    node_t* previous = (node_t*) malloc(sizeof(node_t));
+node_t ** prev = &head_ptr ;
+node_t * end = head_ptr  ;
+u8_t counter=1 ;
 
-    if (*head == NULL)
+if(location == 1)
+{
+    end = end -> next_node ;
+    (*prev) = end ;
+}
+
+else
+{
+    while (counter != location)
     {
-        printf("The linked list is empty");
-        return;
+        prev = &((*prev) -> next_node) ;
+        end = (*prev) ; 
+        counter ++ ;
     }
 
-    else if (temp -> next_node == NULL)
-    {
-        printf("The data is deleted: %d",(*head) -> Data);
-        *head = NULL;
-    }
-    
-    else
-    {
-        location--;
-        while (temp -> next_node != NULL && location != 0)
-        {
-            location--;
-            previous = temp;
-            temp = temp -> next_node;
-        }
-    
-        previous -> next_node = temp -> next_node;
-        printf ("The data is deleted: %d",temp -> Data);
-    }
+    end = end -> next_node ;
+    (*prev) = end ;
+}
 
-    free(temp);
-    
-    return;
+return ;
 }
