@@ -52,6 +52,15 @@ void last_Number()
     Button_status(); 
     /* Use 'ones' and 'tens' variable to display last number on seven segment  */
     /* until pressing in another Bottun  */
+    hsev_seg_enable(SEV_SEG_1);
+    hsev_seg_displayNumber(tens);
+    _delay_ms(10);
+    hsev_seg_disable(SEV_SEG_1);
+
+    hsev_seg_enable(SEV_SEG_2);
+    hsev_seg_displayNumber(ones);
+    _delay_ms(10);
+    hsev_seg_disable(SEV_SEG_2);
     }
     return ;
 }
