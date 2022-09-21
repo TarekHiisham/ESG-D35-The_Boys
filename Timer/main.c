@@ -37,9 +37,9 @@ return 0 ;
 
 void Button_status(void)
 {
-        hputt_getstatus(PUSH_BUTTON_0,&status[0]);
-        hputt_getstatus(PUSH_BUTTON_1,&status[1]);
-        hputt_getstatus(PUSH_BUTTON_2,&status[2]);
+    hputt_getstatus(PUSH_BUTTON_0,&status[0]);
+    hputt_getstatus(PUSH_BUTTON_1,&status[1]);
+    hputt_getstatus(PUSH_BUTTON_2,&status[2]);
 
 return ;
 }
@@ -88,12 +88,37 @@ while (1)
     else if(status[2]==1)
             {
                 /* Intializing 'tens' = 0  */
-            
+                tens = 0;
+
                 /* then turnnig on LED2 */
-            
+                hled_ledValueON(LED2);
+
                 /*make infinity loop to display nembers from 00 to 40 */
-            
+                while (tens < 4)
+                {
+                    for ( ones = 0; ones <= NUMBER_9; ones++)
+                    {
+                        hsev_seg_enable(SEV_SEG_1);
+                        hsev_seg_displayNumber(ones);
+                        _delay_ms(10);
+                        hsev_seg_disable(SEV_SEG_1);   
+
+                        hsev_seg_enable(SEV_SEG_2);
+                        hsev_seg_displayNumber(tens);
+                        _delay_ms(10);
+                        hsev_seg_disable(SEV_SEG_2);   
+                    }
+
+                    tens++;
+
+                }      
+                
                 /*checking if tens = 4 then turnoff LED2 and calling last_Number Fun then timer again*/
+                if (tens == 4)
+                {
+                    hled_ledValueOFF(LED2);
+                }
+                
             }
     }    
 }
