@@ -87,6 +87,9 @@ while (1)
             }
     else if(status[2]==1)
             {
+                last_Number();
+                timer();
+                
                 /* Intializing 'tens' = 0  */
                 tens = 0;
 
