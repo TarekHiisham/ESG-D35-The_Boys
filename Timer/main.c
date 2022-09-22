@@ -120,6 +120,7 @@ while (1)
                     /*checking if tens = 4 then turnoff LED2 and calling last_Number Fun then timer again*/
                     if (tens == NUMBER_4)
                     {
+                        ones = 0;
                         hled_ledValueOFF(LED2);
                         last_Number();
                         timer();                
