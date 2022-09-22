@@ -46,12 +46,14 @@ return ;
 
 void last_Number()
 {
-    Button_status();  
+    /*updading Button status to 0*/
+    Button_status();
+    
+    /* Use 'ones' and 'tens' variable to display last number on seven segment  */
+    /* until pressing in another Bottun  */  
     while(status[0]==0 &&status[1]==0 &&status[2]==0) 
     {
     Button_status(); 
-    /* Use 'ones' and 'tens' variable to display last number on seven segment  */
-    /* until pressing in another Bottun  */
     hsev_seg_enable(SEV_SEG_1);
     hsev_seg_displayNumber(tens);
     _delay_ms(10);
