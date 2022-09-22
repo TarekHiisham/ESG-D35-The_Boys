@@ -96,9 +96,10 @@ while (1)
                 /*make infinity loop to display nembers from 00 to 40 */
                 while (tens < NUMBER_4)
                 {
-                    for (u8_t i = 0; i < 50; i++)
+                    for ( ones = 0; ones <= NUMBER_9; ones++)
                     {
-                        for ( ones = 0; ones <= NUMBER_9; ones++)
+                        
+                        for (u8_t i = 0; i < 50; i++)
                         {
                             hsev_seg_enable(SEV_SEG_2);
                             hsev_seg_displayNumber(ones);
