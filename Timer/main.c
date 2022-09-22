@@ -68,10 +68,15 @@ void last_Number()
 }
 
 void timer(void)
-{
+{  
+    /*checking the status of button*/
+     while(status[0]==0 &&status[1]==0 &&status[2]==0)
+     {
+        Button_status();
+     }
+    
 while (1)
     {
-        Button_status();
         if(status[0]==1)
             {
             /* Intializing 'tens' = 2  */
