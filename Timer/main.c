@@ -72,17 +72,56 @@ while (1)
         Button_status();
         if(status[0]==1)
             {
-
             /* Intializing 'tens' = 2  */
-            
+            tens = 2 ;
             /* then turnnig on LED0 */
-            
+            hled_ledValueON(LED0);  
             /*make do while to display first number for one time*/
-            
+            do
+            {
+                for(u8_t i=0 ; i<=50 ; i++)
+                {
+                hsev_seg_enable(SEV_SEG_1);
+                hsev_seg_displayNumber(NUMBER_3);
+                _delay_ms(10);
+                hsev_seg_disable(SEV_SEG_1);
+
+                hsev_seg_enable(SEV_SEG_2);
+                hsev_seg_displayNumber(NUMBER_0);
+                _delay_ms(10);
+                hsev_seg_disable(SEV_SEG_2);
+                }
+            } while(0);
+
             /*make infinity loop to display nembers from 29 to 00 */
-            
+
+            while (1)
+            {
+            for (ones = 9; ones >= 0; ones--)
+            {
+                for(u8_t i=0 ; i<=50 ; i++)
+                {
+                hsev_seg_enable(SEV_SEG_1);
+                hsev_seg_displayNumber(tens);
+                _delay_ms(10);
+                hsev_seg_disable(SEV_SEG_1);
+
+                hsev_seg_enable(SEV_SEG_2);
+                hsev_seg_displayNumber(ones);
+                _delay_ms(10);
+                hsev_seg_disable(SEV_SEG_2);
+                }
+            }            
             /*checking if tens = 0 then turnoff LED0 and calling last_Number Fun then timer again*/
             
+            if (tens == 0)
+            {
+                hled_ledValueOFF(LED0);
+                last_timer(); 
+                timer();
+            }
+             tens-- ;
+                    }
             }
 
         else if(status[1]==1)
