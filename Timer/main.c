@@ -87,8 +87,6 @@ while (1)
             }
     else if(status[2]==1)
             {
-                last_Number();
-                timer();
                 
                 /* Intializing 'tens' = 0  */
                 tens = 0;
@@ -124,6 +122,8 @@ while (1)
                 if (tens == NUMBER_4)
                 {
                     hled_ledValueOFF(LED2);
+                    last_Number();
+                    timer();                
                 }
                 
             }
