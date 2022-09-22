@@ -95,36 +95,37 @@ while (1)
                 hled_ledValueON(LED2);
 
                 /*make infinity loop to display nembers from 00 to 40 */
-                while (tens < NUMBER_4)
+                while (1)
                 {
                     for ( ones = 0; ones <= NUMBER_9; ones++)
                     {
                         
                         for (u8_t i = 0; i < 50; i++)
                         {
+                            hsev_seg_enable(SEV_SEG_1);
+                            hsev_seg_displayNumber(tens);
+                            _delay_ms(10);
+                            hsev_seg_disable(SEV_SEG_1); 
+
                             hsev_seg_enable(SEV_SEG_2);
                             hsev_seg_displayNumber(ones);
                             _delay_ms(10);
                             hsev_seg_disable(SEV_SEG_2);   
-
-                            hsev_seg_enable(SEV_SEG_1);
-                            hsev_seg_displayNumber(tens);
-                            _delay_ms(10);
-                            hsev_seg_disable(SEV_SEG_1);   
+  
                         }
                     }
 
                     tens++;
 
+                    /*checking if tens = 4 then turnoff LED2 and calling last_Number Fun then timer again*/
+                    if (tens == NUMBER_4)
+                    {
+                        hled_ledValueOFF(LED2);
+                        last_Number();
+                        timer();                
+                    }                    
+
                 }      
-                
-                /*checking if tens = 4 then turnoff LED2 and calling last_Number Fun then timer again*/
-                if (tens == NUMBER_4)
-                {
-                    hled_ledValueOFF(LED2);
-                    last_Number();
-                    timer();                
-                }
                 
             }
     }    
