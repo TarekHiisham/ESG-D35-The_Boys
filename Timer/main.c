@@ -111,26 +111,21 @@ while (1)
                         hsev_seg_disable(SEV_SEG_2);  
 
                         }
-                       
                          
                     }
                     /*checking if tens = 9 then turnoff LED1 and calling last_Number Fun then timer again*/
-                    if(tens==9)
+                    if(tens== NUMBER_9)
                     {
                         hled_ledValueOFF(LED1);
+                        ones--;
                         last_Number();
                         timer();
                     }
-                    else
-                    {
-                         tens++;
-                    }
+                    tens ++ ;
 
                 }
-            
-                
-                
             }
+
     else if(status[2]==1)
             {
                 
@@ -160,18 +155,16 @@ while (1)
   
                         }
                     }
-
-                    tens++;
-
                     /*checking if tens = 4 then turnoff LED2 and calling last_Number Fun then timer again*/
                     if (tens == NUMBER_4)
                     {
-                        ones = 0;
                         hled_ledValueOFF(LED2);
+                        ones=NUMBER_0;
+                        tens = NUMBER_4;
                         last_Number();
                         timer();                
-                    }                    
-
+                    }  
+                    tens++;                 
                 }      
                 
             }
