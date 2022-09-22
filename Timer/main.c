@@ -87,12 +87,49 @@ while (1)
         else if(status[1]==1)
             {
                 /* Intializing 'tens' = 5  */
+                tens=5;
             
                 /* then turnnig on LED1 */
+                hled_ledValueON(LED1);
             
                 /*make infinity loop to display nembers from 50 to 99 */
+                while(1)
+                {   
+                    for ( ones = NUMBER_0; ones <= NUMBER_9; ones++)
+                    {
+                    
+                        for(u8_t i=0;i<=50;i++)
+                        {
+                        hsev_seg_enable(SEV_SEG_1);
+                        hsev_seg_displayNumber(tens);
+                        _delay_ms(10);
+                        hsev_seg_disable(SEV_SEG_1);   
+
+                        hsev_seg_enable(SEV_SEG_2);
+                        hsev_seg_displayNumber(ones);
+                        _delay_ms(10);
+                        hsev_seg_disable(SEV_SEG_2);  
+
+                        }
+                       
+                         
+                    }
+                    /*checking if tens = 9 then turnoff LED1 and calling last_Number Fun then timer again*/
+                    if(tens==9)
+                    {
+                        hled_ledValueOFF(LED1);
+                        last_Number();
+                        timer();
+                    }
+                    else
+                    {
+                         tens++;
+                    }
+
+                }
             
-                /*checking if tens = 9 then turnoff LED1 and calling last_Number Fun then timer again*/
+                
+                
             }
     else if(status[2]==1)
             {
