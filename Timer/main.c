@@ -117,7 +117,7 @@ while (1)
             if (tens == 0)
             {
                 hled_ledValueOFF(LED0);
-                last_timer(); 
+                last_Number(); 
                 timer();
             }
              tens-- ;
