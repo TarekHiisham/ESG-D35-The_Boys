@@ -9,6 +9,8 @@
 
 
 void Operation(Void);
+//hlcd_Clear() Function added to hlcd_program.c
+
 
 
 u8_t button;
