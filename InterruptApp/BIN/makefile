@@ -17,7 +17,7 @@ INC_DIR += -I../HAL/HKPD
 
 
 # C source files
-C_FILES := ../Tarek.c
+C_FILES := ../Shawky.c
 C_FILES += ../MCAL/MDIO/MDIO_program.c
 C_FILES += ../MCAL/MEXTI/MEXTI_program.c
 C_FILES += ../HAL/HLED/HLED_program.c
@@ -28,7 +28,7 @@ C_FILES += ../HAL/HKPD/HKPD_program.c
 
 
 # Object files
-OBJ_FILES := Tarek.o
+OBJ_FILES := Shawky.o
 OBJ_FILES += MDIO_program.o
 OBJ_FILES += MEXTI_program.o
 OBJ_FILES += HLED_program.o
