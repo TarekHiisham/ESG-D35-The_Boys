@@ -29,6 +29,7 @@ int main(void)
 
     mexti_enableExternalInterrupt(INT0_REQ_NUM);
     mexti_attachISR(INT0_REQ_NUM, RISING_EDGE_MODE, func);
+    sei();
 
     while (1)
     {
