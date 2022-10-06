@@ -13,12 +13,7 @@ u32_t x;
 
 void func(void)
 {
-<<<<<<< HEAD
     x-= 200;
-=======
-    x = x - 200;
->>>>>>> 7bca82a2c8d6c0e08c0f26de42c6681ffd684644
-
     return;
 }
 
@@ -50,11 +45,5 @@ int main(void)
         hled_ledValueOFF(LED2);       
 
     }
-<<<<<<< HEAD
-
-=======
-    
->>>>>>> 7bca82a2c8d6c0e08c0f26de42c6681ffd684644
-
     return 0;
 }

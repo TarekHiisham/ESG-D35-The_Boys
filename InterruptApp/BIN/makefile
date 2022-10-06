@@ -17,13 +17,9 @@ INC_DIR += -I../HAL/HKPD
 
 
 # C source files
-<<<<<<< HEAD
 #C_FILES := ../Shawky.c
+#C_FILES := ../Youness.c
 C_FILES := ../Tarek.c
-=======
-C_FILES := ../Shawky.c
-C_FILES := ../Youness.c
->>>>>>> 7bca82a2c8d6c0e08c0f26de42c6681ffd684644
 C_FILES += ../MCAL/MDIO/MDIO_program.c
 C_FILES += ../MCAL/MEXTI/MEXTI_program.c
 C_FILES += ../HAL/HLED/HLED_program.c
@@ -34,13 +30,9 @@ C_FILES += ../HAL/HKPD/HKPD_program.c
 
 
 # Object files
-<<<<<<< HEAD
 #OBJ_FILES := Shawky.o
+#OBJ_FILES := Youness.o
 OBJ_FILES := Tarek.o
-=======
-OBJ_FILES := Shawky.o
-OBJ_FILES := Youness.o
->>>>>>> 7bca82a2c8d6c0e08c0f26de42c6681ffd684644
 OBJ_FILES += MDIO_program.o
 OBJ_FILES += MEXTI_program.o
 OBJ_FILES += HLED_program.o
