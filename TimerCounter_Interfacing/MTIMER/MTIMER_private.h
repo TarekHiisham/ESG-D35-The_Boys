@@ -1,0 +1,54 @@
+/**
+ * @file    MTIMER_private.h
+ * @author  Ahmed Ashraf (ahmedashrafelnaqeeb@gmail.com)
+ * @brief   This file contains private information related to Timer module
+ * @version 1.0
+ * @date    2022-10-08
+ * 
+ * 
+ */
+
+/*Header file guard*/
+#ifndef __MTIMER_PRIVATE_H__
+#define __MTIMER_PRIVATE_H__
+
+/***************************************************************************************************/
+/*                                        Timer Registers                                          */
+/***************************************************************************************************/
+
+/*General timer registers*/
+#define MTIMER_TIMSK             (*(volatile u8_t*)(0x59))
+#define MTIMER_TIFR              (*(volatile u8_t*)(0x58))
+
+/*Timer0 registers*/
+#define MTIMER_TCCR0             (*(volatile u8_t*)(0x53))
+#define MTIMER_TCNT0             (*(volatile u8_t*)(0x52))
+#define MTIMER_OCR0              (*(volatile u8_t*)(0x5C))
+
+/*Timer1 registers*/
+#define MTIMER_TCCR1A             (*(volatile u8_t*)(0x4F))
+#define MTIMER_TCCR1B             (*(volatile u8_t*)(0x4E))
+#define MTIMER_TCNT1_L            (*(volatile u16_t*)(0x4C))
+#define MTIMER_OCR1A_L            (*(volatile u16_t*)(0x4A))
+#define MTIMER_OCR1B_L            (*(volatile u8_t*)(0x48))
+
+/*Timer2 registers*/
+#define MTIMER_TCCR2             (*(volatile u8_t*)(0x45))
+#define MTIMER_TCNT2             (*(volatile u8_t*)(0x44))
+#define MTIMER_OCR2              (*(volatile u8_t*)(0x43))
+
+/***************************************************************************************************/
+/*                                       Timer Registers' bits                                      */
+/***************************************************************************************************/
+
+/*TIFR bits*/
+#define MTIMER_TIFR_OCF0_BIT     (1)
+#define MTIMER_TIFR_OCF1A_BIT    (4)
+#define MTIMER_TIFR_OCF2_BIT     (7)
+
+/*TIMSK bits*/
+#define MTIMER_TIMSK_OCIE0_BIT   (1)
+#define MTIMER_TIMSK_OCIE1_BIT   (4)
+#define MTIMER_TIMSK_OCIE2_BIT   (7)
+
+#endif /*__MTIMER_PRIVATE_H__*/
