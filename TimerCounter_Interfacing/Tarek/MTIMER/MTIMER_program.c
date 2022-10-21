@@ -23,7 +23,15 @@
 /*                                        Important macros                                         */
 /***************************************************************************************************/
 
-#define NULL         ((void*)0)
+#define NULL                     ((void*)0)
+#define TIMER0_PH_CORRET_MODE    (0x60)
+#define TIMER1_PH_CORRET_MODE    (0x8100)
+#define TIMER2_PH_CORRET_MODE    (0x60)
+#define CAPTURE_SIZE             (3)
+#define FIRST_CAPTURE            (0)
+#define SECOND_CAPTURE           (1)
+#define THIRD_CAPTURE            (2)
+#define PERCENTAGE_CONVERSION    (100)
 
 /***************************************************************************************************/
 /*                                        Important variables                                      */
@@ -72,12 +80,12 @@ static void mtimer_start(u8_t au8_timerChannel)
 
         /*In case of channel 1*/
         case TIMER_CHANNEL_1:
-
-            /*Reset the timer counter1*/
-            MTIMER_TCNT1_L = (u16_t)(0) ;
+            
+            /*Reset the timer counter 1*/
+            MTIMER_TCNT1 = 0;
 
             /*Setting the timer1 prescaler and start its operation*/
-            MTIMER_TCCR1B |= gu8_timer1_prescaler;
+            MTIMER_TCCR1 |= (u16_t)gu8_timer1_prescaler;
 
             /*Breaking from this case*/
             break;
@@ -85,7 +93,7 @@ static void mtimer_start(u8_t au8_timerChannel)
         /*In case of channel 2*/
         case TIMER_CHANNEL_2:
             
-            /*Reset the timer counter2*/
+            /*Reset the timer counter 1*/
             MTIMER_TCNT2 = 0;
 
             /*Setting the timer2 prescaler and start its operation*/
@@ -123,7 +131,7 @@ static void mtimer_stop(u8_t au8_timerChannel)
         case TIMER_CHANNEL_1:
 
             /*Stop the timer1 operation*/
-            MTIMER_TCCR1B &= TIMER_OPERATION_STOP;
+            MTIMER_TCCR1 &= TIMER1_OPERATION_STOP;
 
             /*Breaking from this case*/
             break;
@@ -131,7 +139,7 @@ static void mtimer_stop(u8_t au8_timerChannel)
         /*In case of channel 2*/
         case TIMER_CHANNEL_2:
 
-            /*Stop the timer2 operation*/
+            /*Stop the timer0 operation*/
             MTIMER_TCCR2 &= TIMER_OPERATION_STOP;
 
             /*Breaking from this case*/
@@ -148,7 +156,7 @@ static void mtimer_stop(u8_t au8_timerChannel)
     return;
 }
 
-void mtimer_init(u8_t au8_timerChannel, u8_t au8_timerMode, u8_t au8_timerPrescaler)
+void mtimer_init(u8_t au8_timerChannel, u16_t au16_timerMode, u8_t au8_timerPrescaler)
 {
     /*Switching over timer channels*/
     switch(au8_timerChannel)
@@ -156,8 +164,30 @@ void mtimer_init(u8_t au8_timerChannel, u8_t au8_timerMode, u8_t au8_timerPresca
         /*In case of channel 0*/
         case TIMER_CHANNEL_0:
 
+            /*Checking if the timer mode chosen is PWM mode or not*/
+            if(au16_timerMode == (u16_t)TIMER0_PWM_MODE)
+            {
+                /*Checking if the chosen PWM mode is phase correct or fast PWM*/
+                if(au8_timerPrescaler > TIMER_PH_CORRECT_OFFSET)
+                {
+                    /*Setting phase correct mode*/
+                    au16_timerMode = (u16_t)TIMER0_PH_CORRET_MODE;
+
+                    /*Setting the new timer prescaler*/
+                    au8_timerPrescaler -= TIMER_PH_CORRECT_OFFSET;
+                }
+                else
+                {
+                    /*Do nohing*/
+                }
+            }
+            else
+            {
+                /*Do nothing*/
+            }
+
             /*Setting the timer0 mode*/
-            MTIMER_TCCR0 = au8_timerMode;
+            MTIMER_TCCR0 = (u8_t)au16_timerMode;
 
             /*Settint the selected timer prescaler*/
             gu8_timer0_prescaler = au8_timerPrescaler;
@@ -168,9 +198,30 @@ void mtimer_init(u8_t au8_timerChannel, u8_t au8_timerMode, u8_t au8_timerPresca
         /*In case of channel 1*/
         case TIMER_CHANNEL_1:
 
-            /*Setting the timer1 mode*/
-            MTIMER_TCCR1A =  au8_timerMode          ;  
-            MTIMER_TCCR1B = (au8_timerMode | (0x08));  
+            /*Checking if the timer mode chosen is PWM mode or not*/
+            if(au16_timerMode == (u16_t)TIMER1_PWM_MODE)
+            {
+                /*Checking if the chosen PWM mode is phase correct or fast PWM*/
+                if(au8_timerPrescaler > TIMER_PH_CORRECT_OFFSET)
+                {
+                    /*Setting phase correct mode*/
+                    au16_timerMode = (u16_t)TIMER1_PH_CORRET_MODE;
+
+                    /*Setting the new timer prescaler*/
+                    au8_timerPrescaler -= TIMER_PH_CORRECT_OFFSET;
+                }
+                else
+                {
+                    /*Do nohing*/
+                }
+            }
+            else
+            {
+                /*Do nothing*/
+            }
+
+            /*Setting the selected timer mode*/            
+            MTIMER_TCCR1 = au16_timerMode;
 
             /*Settint the selected timer prescaler*/
             gu8_timer1_prescaler = au8_timerPrescaler;
@@ -181,8 +232,30 @@ void mtimer_init(u8_t au8_timerChannel, u8_t au8_timerMode, u8_t au8_timerPresca
         /*In case of channel 2*/
         case TIMER_CHANNEL_2:
 
-            /*Setting the timer2 mode*/
-            MTIMER_TCCR2 = au8_timerMode;
+            /*Checking if the timer mode chosen is PWM mode or not*/
+            if(au16_timerMode == (u16_t)TIMER2_PWM_MODE)
+            {
+                /*Checking if the chosen PWM mode is phase correct or fast PWM*/
+                if(au8_timerPrescaler > TIMER_PH_CORRECT_OFFSET)
+                {
+                    /*Setting phase correct mode*/
+                    au16_timerMode = (u16_t)TIMER2_PH_CORRET_MODE;
+
+                    /*Setting the new timer prescaler*/
+                    au8_timerPrescaler -= TIMER_PH_CORRECT_OFFSET;
+                }
+                else
+                {
+                    /*Do nohing*/
+                }
+            }
+            else
+            {
+                /*Do nothing*/
+            }
+            
+            /*Setting the selected timer mode*/            
+            MTIMER_TCCR2 = (u8_t)au16_timerMode;
 
             /*Settint the selected timer prescaler*/
             gu8_timer2_prescaler = au8_timerPrescaler;
@@ -235,7 +308,7 @@ void mtimer_delayMs_synchronous(u8_t au8_timerChannel, u32_t au32_delayTime_ms)
         case TIMER_CHANNEL_1:
 
             /*Setting the OCR1A value to make a compare match after 1ms*/
-            MTIMER_OCR1A_L = (u16_t) TIMER_1_MS_DELAY ;
+            MTIMER_OCR1A = TIMER_1_MS_DELAY;
 
             /*Start the timer operation*/
             mtimer_start(TIMER_CHANNEL_1);
@@ -259,8 +332,8 @@ void mtimer_delayMs_synchronous(u8_t au8_timerChannel, u32_t au32_delayTime_ms)
         /*In case of channel 2*/
         case TIMER_CHANNEL_2:
 
-            /*Setting the OCR2 value to make a compare match after 1ms*/
-            MTIMER_OCR2 = TIMER_1_MS_DELAY;
+        /*Setting the OCR2 value to make a compare match after 1ms*/
+            MTIMER_OCR1A = TIMER_1_MS_DELAY;
 
             /*Start the timer operation*/
             mtimer_start(TIMER_CHANNEL_2);
@@ -277,6 +350,7 @@ void mtimer_delayMs_synchronous(u8_t au8_timerChannel, u32_t au32_delayTime_ms)
 
             /*Stopping the timer operation*/
             mtimer_stop(TIMER_CHANNEL_2);
+
 
             /*Breaking from this case*/
             break;
@@ -319,9 +393,9 @@ void mtimer_delayMs_asynchronous(u8_t au8_timerChannel, u32_t au32_delayTime_ms,
 
         /*In case of channel 1*/
         case TIMER_CHANNEL_1:
-            
-            /*Setting the OCR1A value to make a compare match after 1ms*/
-            MTIMER_OCR1A_L = (u16_t) TIMER_1_MS_DELAY ;
+
+        /*Setting the OCR1A value to make a compare match after 1ms*/
+            MTIMER_OCR1A = (u16_t) TIMER_1_MS_DELAY ;
 
             /*Setting the timer1 operation parameters*/
             gu32_delayTimeMs_timer1 = au32_delayTime_ms;
@@ -339,17 +413,103 @@ void mtimer_delayMs_asynchronous(u8_t au8_timerChannel, u32_t au32_delayTime_ms,
 
         /*In case of channel 2*/
         case TIMER_CHANNEL_2:
-            
-            /*Setting the OCR2 value to make a compare match after 1ms*/
-            MTIMER_OCR2 = TIMER_1_MS_DELAY;
-            
-            /*Setting the timer2 operation parameters*/
+
+            /*Setting the OCR1A value to make a compare match after 1ms*/
+            MTIMER_OCR2 = TIMER_1_MS_DELAY ;
+
+            /*Setting the timer1 operation parameters*/
             gu32_delayTimeMs_timer2 = au32_delayTime_ms;
             gfptr_timer2ISR = fptr_operationPointer;
             gu8_timer2_operation = au8_operationType;
 
             /*Enable output compare match interrupt*/
             SET_BIT(MTIMER_TIMSK, MTIMER_TIMSK_OCIE2_BIT);
+
+            /*Starting timer1 operations*/
+            mtimer_start(TIMER_CHANNEL_2);
+
+            /*Breaking from this case*/
+            break;
+
+        /*In case of default*/
+        default:
+
+            /*Breaking from this case*/
+            break;
+    }
+
+    /*Return from this function*/
+    return;
+}
+
+void mtimer_runPWM_signal(u8_t au8_timerChannel, u8_t au8_dutyCycle)
+{
+    /*Switching over timer channels*/
+    switch(au8_timerChannel)
+    {
+        /*In case of channel 0*/
+        case TIMER_CHANNEL_0:
+
+            /*Setting the duty cycle*/
+            MTIMER_OCR0 = au8_dutyCycle;
+
+            /*Breaking from this case*/
+            break;
+
+        /*In case of channel 1*/
+        case TIMER_CHANNEL_1:
+
+            /*Setting the duty cycle*/
+            MTIMER_OCR1A = au8_dutyCycle;
+
+            /*Breaking from this case*/
+            break;
+
+        /*In case of channel 2*/
+        case TIMER_CHANNEL_2:
+
+            /*Setting the duty cycle*/
+            MTIMER_OCR2 = au8_dutyCycle;
+
+            /*Breaking from this case*/
+            break;
+
+        /*In case of default*/
+        default:
+
+            /*Breaking from this case*/
+            break;
+    }
+    
+    /*Return from this function*/
+    return;    
+}
+
+void mtimer_startPWM_signal(u8_t au8_timerChannel)
+{
+    /*Switching over timer channels*/
+    switch(au8_timerChannel)
+    {
+        /*In case of channel 0*/
+        case TIMER_CHANNEL_0:
+
+            /*Starting timer0 operations*/
+            mtimer_start(TIMER_CHANNEL_0);
+
+            /*Breaking from this case*/
+            break;
+
+        /*In case of channel 1*/
+        case TIMER_CHANNEL_1:
+
+            /*Starting timer1 operations*/
+            mtimer_start(TIMER_CHANNEL_1);
+
+            /*Breaking from this case*/
+            break;
+
+        /*In case of channel 2*/
+        case TIMER_CHANNEL_2:
 
             /*Starting timer2 operations*/
             mtimer_start(TIMER_CHANNEL_2);
@@ -363,6 +523,102 @@ void mtimer_delayMs_asynchronous(u8_t au8_timerChannel, u32_t au32_delayTime_ms,
             /*Breaking from this case*/
             break;
     }
+
+    /*Return from this function*/
+    return;
+}
+
+void mtimer_stopPWM_signal(u8_t au8_timerChannel)
+{
+    /*Switching over timer channels*/
+    switch(au8_timerChannel)
+    {
+        /*In case of channel 0*/
+        case TIMER_CHANNEL_0:
+
+            /*Stopping timer0 operations*/
+            mtimer_stop(TIMER_CHANNEL_0);
+
+            /*Breaking from this case*/
+            break;
+
+        /*In case of channel 1*/
+        case TIMER_CHANNEL_1:
+
+            /*Stopping timer1 operations*/
+            mtimer_stop(TIMER_CHANNEL_1);
+
+            /*Breaking from this case*/
+            break;
+
+        /*In case of channel 2*/
+        case TIMER_CHANNEL_2:
+
+            /*Stopping timer2 operations*/
+            mtimer_stop(TIMER_CHANNEL_2);
+
+            /*Breaking from this case*/
+            break;
+
+        /*In case of default*/
+        default:
+
+            /*Breaking from this case*/
+            break;
+    }
+
+    /*Return from this function*/
+    return;
+}
+
+void mtimer_getSignal_duty_and_freq(u8_t* pu8_duty, u32_t* pu32_freq)
+{
+    /*Local variable used in looping operations*/
+    u8_t au8_loopingVar = 0; 
+    
+    /*Local variables used in ICU operations*/
+    u16_t au16_captureValue[CAPTURE_SIZE] = {0};
+
+    /*Local variables used to store the ON period and total period*/
+    u16_t au16_Ton = 0;
+    u16_t au16_periodicTime = 0;
+
+    /*Setting the ICU to be triggered on rising edge*/
+    SET_BIT(MTIMER_TCCR1, MTIMER_TCCR1_ICES1_BIT);        
+
+    /*Running timer channel 1*/
+    mtimer_start(TIMER_CHANNEL_1);
+
+    /*Looping over ICU captures*/
+    for(au8_loopingVar = 0; au8_loopingVar < CAPTURE_SIZE; au8_loopingVar++)
+    {
+        /*Waiting until the rising/falling edge happens*/
+        while(!GET_BIT(MTIMER_TIFR, MTIMER_TIFR_ICF1_BIT));
+
+        /*Getting the capture value*/
+        au16_captureValue[au8_loopingVar] = MTIMER_ICR1;
+
+        /*Clearing the ICF1 flag*/
+        SET_BIT(MTIMER_TIFR, MTIMER_TIFR_ICF1_BIT);
+
+        /*Setting the ICU to be triggered on rising/falling edge*/
+        TOGGLE_BIT(MTIMER_TCCR1, MTIMER_TCCR1_ICES1_BIT);        
+    }
+
+    /*Stopping the timer operations*/
+    mtimer_stop(TIMER_CHANNEL_1);
+
+    /*Getting the Ton value*/
+    au16_Ton = au16_captureValue[SECOND_CAPTURE] - au16_captureValue[FIRST_CAPTURE];
+
+    /*Getting the periodic time value*/
+    au16_periodicTime = au16_captureValue[THIRD_CAPTURE] - au16_captureValue[FIRST_CAPTURE];
+    
+    /*Getting the duty cycle*/
+    *pu8_duty = (u8_t)( (((u32_t)au16_Ton * PERCENTAGE_CONVERSION) / (u32_t)au16_periodicTime) );
+
+    /*Getting the frequency value in Hz*/
+    *pu32_freq = TIMER_ICU_FREQ_4US_DIVIDER / (u32_t)au16_periodicTime;
 
     /*Return from this function*/
     return;
